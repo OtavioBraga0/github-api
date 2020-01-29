@@ -26,12 +26,13 @@ module.exports = {
     'prettier'
   ],
   rules: {
-    'prettier/prettier':'error',
-    'eslint/state-in-constructor': 'never',
+    'prettier/prettier': 'error',
     'react/jsx-filename-extension': [
       'warn',
-      { extensions: ['.jsx', '.js'] }
+      {extensions: ['.jsx', '.js']}
     ],
-    'import/prefer-default-export': 'off'
+    'import/prefer-default-export': 'off',
+    'react/state-in-constructor': 'off',
+    'react/static-property-placement': 'off',
   },
 };

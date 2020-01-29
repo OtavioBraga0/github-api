@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 import api from '../../services/api';
 
-import { Container, Form, SubmitButton, List } from './styles';
+import Container from '../../components/Container';
+
+import { Form, SubmitButton, List } from './styles';
 
 export default class Main extends Component {
   state = {
@@ -12,30 +15,30 @@ export default class Main extends Component {
     loading: false,
   };
 
-  componentDidMount(){
+  componentDidMount() {
     const repositories = localStorage.getItem('repositories');
 
     if (repositories) {
-      this.setState({repositories: JSON.parse(repositories)})
+      this.setState({ repositories: JSON.parse(repositories) });
     }
   }
 
-  componentDidUpdate(_, prevState){
-    const {repositories} = this.state
+  componentDidUpdate(_, prevState) {
+    const { repositories } = this.state;
 
-    if(prevState.repositories !== repositories){
+    if (prevState.repositories !== repositories) {
       localStorage.setItem('repositories', JSON.stringify(repositories));
     }
   }
 
   handleInputChange = e => {
     this.setState({ newRepo: e.target.value });
-  }
+  };
 
   handleSubmit = async e => {
     e.preventDefault();
 
-    this.setState({loading: true})
+    this.setState({ loading: true });
 
     const { newRepo, repositories } = this.state;
 
@@ -43,14 +46,14 @@ export default class Main extends Component {
 
     const data = {
       name: response.data.full_name,
-    }
+    };
 
     this.setState({
       repositories: [...repositories, data],
       newRepo: '',
       loading: false,
-    })
-  }
+    });
+  };
 
   render() {
     const { newRepo, repositories, loading } = this.state;
@@ -69,7 +72,11 @@ export default class Main extends Component {
           />
 
           <SubmitButton loading={loading}>
-            { loading ? <FaSpinner color="#FFF" size={14} /> : <FaPlus color="#FFF" size={14} /> }
+            {loading ? (
+              <FaSpinner color="#FFF" size={14} />
+            ) : (
+              <FaPlus color="#FFF" size={14} />
+            )}
           </SubmitButton>
         </Form>
 
@@ -78,7 +85,9 @@ export default class Main extends Component {
             return (
               <li key={repository.name}>
                 <span>{repository.name}</span>
-                <a href="">Detalhes</a>
+                <Link to={`/repository/${encodeURIComponent(repository.name)}`}>
+                  Detalhes
+                </Link>
               </li>
             );
           })}
