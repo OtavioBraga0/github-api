@@ -27,6 +27,7 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier':'error',
+    'eslint/state-in-constructor': 'never',
     'react/jsx-filename-extension': [
       'warn',
       { extensions: ['.jsx', '.js'] }
